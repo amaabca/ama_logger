@@ -23,6 +23,7 @@ module Ama
           }
             .compact
             .to_json
+            .concat("\n")
         end
 
         private

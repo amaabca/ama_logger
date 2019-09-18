@@ -17,6 +17,6 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 25
 Metrics/AbcSize:
-  Max: 16
+  Max: 17
 Style/Lambda:
   EnforcedStyle: literal
