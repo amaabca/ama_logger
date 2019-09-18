@@ -56,6 +56,10 @@ describe Ama::Logger::Formatter::Lambda do
             expect(entry).to be_a(String)
           end
 
+          it 'has a trailing newline' do
+            expect(entry[-1]).to eq("\n")
+          end
+
           it 'includes the event name' do
             expect(parsed['eventName']).to eq('log.info')
           end
