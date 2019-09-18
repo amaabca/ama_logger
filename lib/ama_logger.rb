@@ -1,6 +1,3 @@
-require "ama_logger/version"
+# frozen_string_literal: true
 
-module AmaLogger
-  class Error < StandardError; end
-  # Your code goes here...
-end
+require_relative 'ama/logger'
