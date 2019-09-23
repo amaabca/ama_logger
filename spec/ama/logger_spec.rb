@@ -17,4 +17,30 @@ describe Ama::Logger do
       expect(logger.level).to eq(Logger::Severity::DEBUG)
     end
   end
+
+  describe '.stringified_hash' do
+    let(:base) { Logger.new(StringIO.new) }
+
+    subject do
+      described_class.stringified_hash(
+        base,
+        filters: [:password],
+        event_name: 'test',
+        progname: 'program'
+      )
+    end
+
+    it 'returns a new Logger instance' do
+      expect(subject.object_id).to_not eq(base.object_id)
+      expect(subject).to be_a(Logger)
+    end
+
+    it 'sets the formatter as a StringifiedHash formatter' do
+      expect(subject.formatter).to be_a(Ama::Logger::Formatter::StringifiedHash)
+    end
+
+    it 'sets the progname attribute' do
+      expect(subject.progname).to eq('program')
+    end
+  end
 end
