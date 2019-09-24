@@ -28,6 +28,13 @@ module Ama
           instance.formatter = Ama::Logger::Formatter::Lambda.new
         end
       end
+
+      def stringified_hash(base, opts = {})
+        base.dup.tap do |instance|
+          instance.formatter = Ama::Logger::Formatter::StringifiedHash.new(opts)
+          instance.progname = opts[:progname]
+        end
+      end
     end
   end
 end

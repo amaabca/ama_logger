@@ -26,17 +26,51 @@ Ama.logger = Ama::Logger.lambda(STDERR, level: Logger::Severity::DEBUG)
 
 The default `logger` instance is intended for use with AWS Lambda - it requires a `context` instance (from a [Lambda handler](https://docs.aws.amazon.com/lambda/latest/dg/ruby-context.html)) to be passed as well as any additional data.
 
-Instead of passing a log string, you must pass a `Hash` of data:
+## Formatters
+
+This library includes the following custom log formatters:
+
+### Ama::Logger::Formatter::Lambda
+
+This formatter accepts a Ruby hash as a message and outputs a JSON string.
+
+The input hash must look like:
 
 ```ruby
 Ama.logger.info(
-  context: context,                             # required - the Lambda context instance
+  context: context,                             # required - the Lambda context instance (https://docs.aws.amazon.com/lambda/latest/dg/ruby-context.html)
   event_name: 'log.info',                       # required
   exception: 'ArgumentError - something broke', # optional - indexed
   metric_name: 'error:count',                   # optional - indexed
   metric_value: 1,                              # optional - indexed, coerced to integer
   metric_content: 'error',                      # optional - indexed, coerced to string
   details: { message: 'test' }                  # optional - non-indexed, Hash coerced to string
+)
+```
+
+### Ama::Logger::Formatter::StringifiedHash
+
+This formatter accepts string message and outputs a JSON string. The formatter is able to filter sensitive data based on the input provided.
+
+Instances of this formatter accept the following parameters during initialization:
+
+```ruby
+Ama::Logger::Formatter::StringifiedHash.new(
+  filters: [:password],  # optional - named parameters that will be filtered from output
+  event_name: 'my.event' # optional - mapped to the `eventName` property in JSON output
+)
+```
+
+This formatter is commonly used to filter sensitive data from internal Rails logging mechanisms (i.e. ActiveJob).
+
+See below for an example to override the ActiveJob logger:
+
+```ruby
+ActiveJob::Base.logger = Ama::Logger.stringified_hash(
+  ActiveJob::Base.logger,
+  event_name: 'rails.activejob',
+  filters: Rails.configuration.filter_parameters,
+  progname: 'gatekeeper'
 )
 ```
 
