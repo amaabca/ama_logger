@@ -32,7 +32,7 @@ This library includes the following custom log formatters:
 
 ### Ama::Logger::Formatter::Lambda
 
-This formatter accepts a Ruby hash as a message and outputs a JSON string.
+This formatter accepts a Ruby hash as a message, an AWS Lambda context instance and outputs a JSON string.
 
 The input hash must look like:
 
@@ -40,6 +40,25 @@ The input hash must look like:
 Ama.logger.info(
   context: context,                             # required - the Lambda context instance (https://docs.aws.amazon.com/lambda/latest/dg/ruby-context.html)
   event_name: 'log.info',                       # required
+  exception: 'ArgumentError - something broke', # optional - indexed
+  metric_name: 'error:count',                   # optional - indexed
+  metric_value: 1,                              # optional - indexed, coerced to integer
+  metric_content: 'error',                      # optional - indexed, coerced to string
+  details: { message: 'test' }                  # optional - non-indexed, Hash coerced to string
+)
+```
+
+### Ama::Logger::Formatter::Json
+
+This formatter accepts a Ruby hash as a message and outputs a JSON string.
+
+The input hash must look like:
+
+```ruby
+Ama.logger.info(
+  event_name: 'log.info',                       # required
+  event_id: '1234',                             # required - indexed
+  event_source: 'my_source',                    # required - indexed
   exception: 'ArgumentError - something broke', # optional - indexed
   metric_name: 'error:count',                   # optional - indexed
   metric_value: 1,                              # optional - indexed, coerced to integer

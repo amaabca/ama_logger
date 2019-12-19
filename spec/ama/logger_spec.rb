@@ -16,6 +16,25 @@ describe Ama::Logger do
       logger = described_class.lambda(StringIO.new, progname: 'test', level: Logger::Severity::DEBUG)
       expect(logger.level).to eq(Logger::Severity::DEBUG)
     end
+
+    it 'has the correct formatter' do
+      expect(described_class.lambda.formatter).to be_a(Ama::Logger::Formatter::Lambda)
+    end
+  end
+
+  describe '.json' do
+    it 'returns a new Logger instance' do
+      expect(described_class.json).to be_a(Logger)
+    end
+
+    it 'accepts parameters' do
+      logger = described_class.json(StringIO.new, progname: 'test', level: Logger::Severity::DEBUG)
+      expect(logger.level).to eq(Logger::Severity::DEBUG)
+    end
+
+    it 'has the correct formatter' do
+      expect(described_class.json.formatter).to be_a(Ama::Logger::Formatter::Json)
+    end
   end
 
   describe '.stringified_hash' do

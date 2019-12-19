@@ -29,6 +29,12 @@ module Ama
         end
       end
 
+      def json(io = STDOUT, *args)
+        ::Logger.new(io, *args).tap do |instance|
+          instance.formatter = Ama::Logger::Formatter::Json.new
+        end
+      end
+
       def stringified_hash(base, opts = {})
         base.dup.tap do |instance|
           instance.formatter = Ama::Logger::Formatter::StringifiedHash.new(opts)
