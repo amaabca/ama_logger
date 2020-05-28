@@ -93,6 +93,24 @@ ActiveJob::Base.logger = Ama::Logger.stringified_hash(
 )
 ```
 
+### Mixins
+
+#### Ama::Logger::Mixins::LambdaHandler
+
+Defines a method that accepts the `event:` and `context:` named arguments as used in an AWS lambda function and logs the input event and output response.
+
+```ruby
+class MyClass
+  extend Ama::Logger::Mixins::LambdaHandler
+
+  define_lambda_handler(:handler) do |event, context|
+    # do something
+  end
+end
+
+MyClass.handle(event: event, context: context) # => the output of lambda handler
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/amaabca/ama_logger.

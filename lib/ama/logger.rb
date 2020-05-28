@@ -23,14 +23,14 @@ module Ama
         Pathname.new(Gem.loaded_specs['ama_logger'].full_gem_path)
       end
 
-      def lambda(io = STDOUT, *args)
-        ::Logger.new(io, *args).tap do |instance|
+      def lambda(io = STDOUT, **args)
+        ::Logger.new(io, **args).tap do |instance|
           instance.formatter = Ama::Logger::Formatter::Lambda.new
         end
       end
 
-      def json(io = STDOUT, *args)
-        ::Logger.new(io, *args).tap do |instance|
+      def json(io = STDOUT, **args)
+        ::Logger.new(io, **args).tap do |instance|
           instance.formatter = Ama::Logger::Formatter::Json.new
         end
       end
