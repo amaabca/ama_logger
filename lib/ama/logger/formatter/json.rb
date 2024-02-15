@@ -10,7 +10,7 @@ module Ama
           event_name = msg.fetch(:event_name) { missing_argument!(:event_name) }
           event_source = msg.fetch(:event_source) { missing_argument!(:event_source) }
           event_id = msg.fetch(:event_id) { missing_argument!(:event_id) }
-          execution_time = msg.fetch(:execution_time)
+          execution_time = msg[:execution_time]&.to_f
 
           {
             exception: msg[:exception],
