@@ -48,7 +48,7 @@ describe Ama::Logger::Formatter::Json do
             event_id: '1',
             event_source: 'test',
             exception: 'FakeError: something failed',
-            execution_time_ms: 12.34,
+            execution_time_ms: 12_340,
             metric_name: 'error_count',
             metric_value: '1',
             metric_content: 'test@example.com',
@@ -73,7 +73,7 @@ describe Ama::Logger::Formatter::Json do
         end
 
         it 'includes the execution time' do
-          expect(parsed['executionTime']).to eq(12.34)
+          expect(parsed['executionTime']).to eq(12_340)
         end
 
         it 'includes the exception message' do
