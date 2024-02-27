@@ -10,7 +10,7 @@ module Ama
           event_name = msg.fetch(:event_name) { missing_argument!(:event_name) }
           event_source = msg.fetch(:event_source) { missing_argument!(:event_source) }
           event_id = msg.fetch(:event_id) { missing_argument!(:event_id) }
-          execution_time = msg[:execution_time]&.to_f
+          execution_time_ms = msg[:execution_time_ms]&.to_f
 
           {
             exception: msg[:exception],
@@ -18,7 +18,7 @@ module Ama
             eventSource: event_source.to_s,
             eventId: event_id.to_s,
             eventAgent: Ama::Logger::AGENT_VERSION,
-            executionTime: execution_time,
+            executionTime: execution_time_ms,
             details: details(msg),
             indexed: indexed(msg),
             severity: severity,
