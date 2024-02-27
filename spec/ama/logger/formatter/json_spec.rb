@@ -48,7 +48,7 @@ describe Ama::Logger::Formatter::Json do
             event_id: '1',
             event_source: 'test',
             exception: 'FakeError: something failed',
-            execution_time: 12.34,
+            execution_time_ms: 12.34,
             metric_name: 'error_count',
             metric_value: '1',
             metric_content: 'test@example.com',
