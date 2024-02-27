@@ -60,6 +60,7 @@ Ama.logger.info(
   event_id: '1234',                             # required - indexed
   event_source: 'my_source',                    # required - indexed
   exception: 'ArgumentError - something broke', # optional - indexed
+  execution_time_ms: 1234.56,                   # optional - indexed
   metric_name: 'error:count',                   # optional - indexed
   metric_value: 1,                              # optional - indexed, coerced to integer
   metric_content: 'error',                      # optional - indexed, coerced to string
